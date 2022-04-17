@@ -1,0 +1,11 @@
+{
+  "namespace": "meilisearch",
+  "use_index": "./plugin.js",
+  "paths": {
+    "commands": "commands"
+  },
+  "importable": {
+    "configs": "exports/config.js",
+    "configs.ts": "exports/config.ts"
+  }
+}

@@ -1,0 +1,27 @@
+/**
+ * This command starts Meilisearch.
+ */
+import {execSync} from "child_process"
+import {DollarSign} from "xpresser/types";
+import {PluginConfig} from "../types";
+
+export = async (args: string[], {helper}: {helper: {$: DollarSign}}) => {
+    // Get xpresser helper
+    const $ = helper.$;
+
+    // Get meilisearch config
+    const mei  = $.config.newInstanceFrom<PluginConfig>('meilisearch');
+
+    // Get path to meilisearch
+    const pathToBinary = mei.get('pathToBinary');
+    $.file.makeDirIfNotExist(pathToBinary);
+
+    // Get CLI arguments
+    const cliArgs = mei.get<string[]>('cliArgs', []);
+
+    // compose command
+    const command = `cd ${pathToBinary} && ./meilisearch ${cliArgs.join(' ')}`;
+
+    // start meilisearch
+    execSync(command, {stdio: 'inherit'});
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "command": "mei:install",
+    "description": "Try installing meilisearch.",
+    "file": "install-meilisearch.js"
+  },
+  {
+    "command": "mei:start",
+    "description": "Start meilisearch.",
+    "file": "start-meilisearch.js"
+  }
+]

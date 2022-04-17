@@ -1,0 +1,8 @@
+.vscodes
+.idea
+node_modules
+types
+
+
+*.js
+*.d.ts

@@ -1,0 +1,23 @@
+{
+  "name": "@xpresser/meilisearch",
+  "version": "0.1.1",
+  "description": "Xpresser Meilisearch Plugin",
+  "repository": "https://github.com/xpresserjs/meilisearch",
+  "author": "xpresserjs",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "watch": "npx tsc --watch",
+    "build": "npx tsc",
+    "prepublishOnly": "npm run build"
+
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3",
+    "xpresser": "^0.27.4"
+  },
+  "dependencies": {
+    "@xpresser/plugin-tools": "^1.2.5",
+    "meilisearch": "^0.25.0"
+  }
+}
