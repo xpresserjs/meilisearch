@@ -21,18 +21,12 @@ export function run(plugin: PluginData, $: DollarSign) {
     if ($.isNativeCliCommand()) return;
 
     // load config file.
-    const { pluginConfig, foundConfigFile } = loadPluginConfig<PluginConfig>({
+    const { pluginConfig } = loadPluginConfig<PluginConfig>({
         namespace,
         type: "function",
         configFile: "meilisearch",
         default: require("./exports/config"),
     }, $);
-
-
-    // Validate configs if found config file
-    if (foundConfigFile) {
-        $.logInfo(`Found meilisearch config file: ${foundConfigFile}`);
-    }
 
 
     // set config

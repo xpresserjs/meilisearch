@@ -1,5 +1,6 @@
 import type {DollarSign} from "xpresser/types";
-import type {PluginConfig} from "../types";
+import {Config} from "meilisearch";
+
 
 export = ($: DollarSign): PluginConfig => {
     return {
@@ -14,3 +15,10 @@ export = ($: DollarSign): PluginConfig => {
         ],
     }
 }
+
+
+type PluginConfig = {
+    pathToBinary: string;
+    config: Config | (() => Config);
+    cliArgs: string[] | (() => string[]);
+};

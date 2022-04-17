@@ -17,7 +17,8 @@ export = async (args: string[], {helper}: {helper: {$: DollarSign}}) => {
     $.file.makeDirIfNotExist(pathToBinary);
 
     // Get CLI arguments
-    const cliArgs = mei.get<string[]>('cliArgs', []);
+    let cliArgs = mei.get<PluginConfig["cliArgs"]>('cliArgs', []);
+    if(typeof cliArgs === 'function') cliArgs = cliArgs();
 
     // compose command
     const command = `cd ${pathToBinary} && ./meilisearch ${cliArgs.join(' ')}`;
