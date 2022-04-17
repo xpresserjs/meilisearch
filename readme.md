@@ -26,4 +26,4 @@ Add the following to your `plugins.json` file:
 }
 ```
 
-More docs coming soon..
+More docs coming soon.
