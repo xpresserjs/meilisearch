@@ -3,9 +3,10 @@
 ###### STAGE: (RFC)
 
 This plugin will:
-    - Add Meilisearch to your xpresser project.
-    - cli commands to install/start Meilisearch.
-    - Cron jobs to index your data at specified intervals.
+
+- Add Meilisearch to your xpresser project.
+- cli commands to install/start Meilisearch.
+- Cron jobs to index your data at specified intervals.
     
 
 ## Usage
