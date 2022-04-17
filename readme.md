@@ -1,5 +1,7 @@
 # Xpresser Meilisearch Plugin
 
+###### STAGE: (RFC)
+
 This plugin will:
     - Add Meilisearch to your xpresser project.
     - cli commands to install/start Meilisearch.
