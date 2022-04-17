@@ -80,16 +80,13 @@ export class SearchModel<Data = any> {
         // get meilisearch instance
         const meilisearch = useMeilisearch($);
         this.index = meilisearch.index(model.index);
-
-        // init index
-        this.initialize().catch(console.error);
     }
 
     async initialize() {
-        if (this.model.init) {
+        if (this.model.init && !this.initialized) {
             await this.model.init(this.index)
-            this.initialized = true;
         }
+        this.initialized = true;
     }
 
 
