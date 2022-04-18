@@ -1,21 +1,20 @@
-import {DollarSign} from "xpresser/types";
-import type {Index, MeiliSearch} from "meilisearch";
-import {namespace} from "./use.json";
-import {PluginConfig} from "./types";
-
+import { DollarSign } from "xpresser/types";
+import type { Index, MeiliSearch } from "meilisearch";
+import { namespace } from "./use.json";
+import { PluginConfig } from "./types";
 
 /**
  * Use Meilisearch - Gets the Meilisearch instance.
  * @param $
  */
 export function useMeilisearch($?: DollarSign) {
-    if (!$) $ = require('xpresser').getInstance() as DollarSign;
+    if (!$) $ = require("xpresser").getInstance() as DollarSign;
 
     if (!$.engineData.has(namespace)) {
         // require meilisearch
-        const {MeiliSearch} = require("meilisearch") as typeof import("meilisearch");
+        const { MeiliSearch } = require("meilisearch") as typeof import("meilisearch");
 
-        let {config} = $.config.get<PluginConfig>(namespace);
+        let { config } = $.config.get<PluginConfig>(namespace);
         if (typeof config === "function") config = config();
 
         // Initialize meilisearch
@@ -25,9 +24,8 @@ export function useMeilisearch($?: DollarSign) {
         $.engineData.set(namespace, meilisearch);
     }
 
-    return $.engineData.get<MeiliSearch>('meilisearch');
+    return $.engineData.get<MeiliSearch>("meilisearch");
 }
-
 
 type RawSearchModel<T> = {
     // The name of the model.
@@ -50,9 +48,8 @@ type RawSearchModel<T> = {
      */
     data(index: Index): Promise<T[]>;
 
-
     /**
-     * Modify/Customize
+     * Modify/Customize index
      * @param index
      */
     init?(index: Index): Promise<void>;
@@ -63,7 +60,10 @@ type RawSearchModel<T> = {
  * @param model
  * @param $
  */
-export function defineSearchModel<Data = any>(model: RawSearchModel<Data>, $?: DollarSign) {
+export function defineSearchModel<Data = any>(
+    model: RawSearchModel<Data>,
+    $?: DollarSign
+) {
     // add index to options
     return new SearchModel<Data>(model, $);
 }
@@ -83,23 +83,25 @@ export class SearchModel<Data = any> {
     }
 
     async initialize() {
+        // if model has an init function
+        // run it
         if (this.model.init && !this.initialized) {
-            await this.model.init(this.index)
+            await this.model.init(this.index);
         }
+
+        // set initialized to true
         this.initialized = true;
     }
-
 
     /**
      * Synchronize index with model data
      */
     async syncData() {
-        if(!this.initialized) await this.initialize();
+        if (!this.initialized) await this.initialize();
 
         const documents = await this.model.data(this.index);
         const addDocuments = await this.index.addDocuments(documents);
 
-
-        return [documents.length, addDocuments]
+        return [documents.length, addDocuments];
     }
 }
