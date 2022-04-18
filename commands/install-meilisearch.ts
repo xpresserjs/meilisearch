@@ -7,13 +7,16 @@ import { PluginConfig } from "../types";
 
 export = async (args: string[], { helper }: { helper: { $: DollarSign } }) => {
     const $ = helper.$;
+    const force = args[0] === "force";
     const mei = $.config.newInstanceFrom<PluginConfig>("meilisearch");
 
     // Get path to Meilisearch
     const pathToBinary = mei.get("pathToBinary");
 
-    if ($.file.exists(pathToBinary)) {
-        $.logWarning(`Meilisearch is already installed at ${pathToBinary}`);
+    if ($.file.exists(pathToBinary) && !force) {
+        $.logWarning(
+            `Meilisearch is already installed at ${pathToBinary}, If you wish to reinstall, add "force" to the command.`
+        );
         return $.exit();
     } else {
         $.file.makeDirIfNotExist(pathToBinary);
