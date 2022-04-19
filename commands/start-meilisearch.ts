@@ -21,8 +21,8 @@ export = async (args: string[], { helper }: { helper: { $: DollarSign } }) => {
     if (typeof cliArgs === "function") cliArgs = cliArgs();
 
     // compose command
-    const command = `cd ${pathToBinary} && ./meilisearch ${cliArgs.join(" ")}`;
+    const command = `./meilisearch ${cliArgs.join(" ")}`;
 
     // start meilisearch
-    execSync(command, { stdio: "inherit" });
+    execSync(command, { stdio: "inherit", cwd: pathToBinary });
 };
