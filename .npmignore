@@ -5,3 +5,4 @@ yarn.lock
 
 *.ts
 !*.d.ts
+!exports/config.ts
