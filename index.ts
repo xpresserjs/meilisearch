@@ -100,7 +100,7 @@ export class SearchModel<Data = any> {
         if (!this.initialized) await this.initialize();
 
         const documents = await this.model.data(this.index);
-        const addDocuments = await this.index.addDocuments(documents);
+        const addDocuments = await this.index.addDocuments(documents as Record<string, any>[]);
 
         return [documents.length, addDocuments];
     }
