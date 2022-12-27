@@ -1,7 +1,7 @@
-import { DollarSign } from "xpresser/types";
-import type { Index, MeiliSearch } from "meilisearch";
-import { namespace } from "./use.json";
-import { PluginConfig } from "./types";
+import {DollarSign} from "xpresser/types";
+import type {Index, MeiliSearch} from "meilisearch";
+import {namespace} from "./use.json";
+import {PluginConfig} from "./types";
 
 /**
  * Use Meilisearch - Gets the Meilisearch instance.
@@ -12,9 +12,9 @@ export function useMeilisearch($?: DollarSign) {
 
     if (!$.engineData.has(namespace)) {
         // require meilisearch
-        const { MeiliSearch } = require("meilisearch") as typeof import("meilisearch");
+        const {MeiliSearch} = require("meilisearch") as typeof import("meilisearch");
 
-        let { config } = $.config.get<PluginConfig>(namespace);
+        let {config} = $.config.get<PluginConfig>(namespace);
         if (typeof config === "function") config = config();
 
         // Initialize meilisearch
@@ -70,24 +70,32 @@ export function defineSearchModel<Data = any>(
 
 export class SearchModel<Data = any> {
     model: RawSearchModel<Data>;
-    index: Index;
+    index!: Index;
     initialized: boolean = false;
+    readonly #getXpresserFn: () => DollarSign | undefined;
+
 
     constructor(model: RawSearchModel<Data>, $?: DollarSign) {
         if (!model.index) model.index = model.name.toLowerCase();
         this.model = model;
-
-        // get meilisearch instance
-        const meilisearch = useMeilisearch($);
-        this.index = meilisearch.index(model.index);
+        this.#getXpresserFn = () => $;
     }
 
     async initialize() {
-        // if model has an init function
-        // run it
-        if (this.model.init && !this.initialized) {
-            await this.model.init(this.index);
+        if (this.initialized) return;
+
+        const m = useMeilisearch(this.#getXpresserFn());
+
+        try {
+            await m.createIndex(this.model.index!);
+            this.index = m.index(this.model.index!);
+        } catch (e) {
+            this.index = m.index(this.model.index!);
         }
+
+
+        // if model has an init function, run it
+        if (this.model.init) await this.model.init(this.index);
 
         // set initialized to true
         this.initialized = true;
