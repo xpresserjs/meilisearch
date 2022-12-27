@@ -1,6 +1,6 @@
 {
   "name": "@xpresser/meilisearch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Xpresser Meilisearch Plugin",
   "repository": "https://github.com/xpresserjs/meilisearch",
   "author": "xpresserjs",
