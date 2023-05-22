@@ -1,5 +1,5 @@
 import { DollarSign } from "xpresser/types";
-import type { Index, MeiliSearch } from "meilisearch";
+import type { Index, IndexOptions, MeiliSearch } from "meilisearch";
 import { namespace } from "./use.json";
 import { PluginConfig } from "./types";
 
@@ -34,6 +34,9 @@ type RawSearchModel<T> = {
     // The name of the model's table/index.
     // If not provided, the lower-cased name of the model will be used.
     index?: string;
+
+    // options to pass to meilisearch when creating index.
+    indexOptions?: IndexOptions;
 
     /**
      * Provide the data to be indexed.
@@ -86,7 +89,7 @@ export class SearchModel<Data = any> {
         const m = useMeilisearch(this.#getXpresserFn());
 
         try {
-            await m.createIndex(this.model.index!);
+            await m.createIndex(this.model.index!, this.model.indexOptions);
             this.index = m.index(this.model.index!);
         } catch (e) {
             this.index = m.index(this.model.index!);
