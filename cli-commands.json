@@ -1,6 +1,6 @@
 [
   {
-    "command": "mei:install",
+    "command": "mei:install [force]",
     "description": "Try installing meilisearch.",
     "file": "install-meilisearch.js"
   },

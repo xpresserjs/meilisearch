@@ -2,8 +2,8 @@
  * This command installs Meilisearch.
  */
 import { execSync } from "child_process";
-import { DollarSign } from "xpresser/types";
-import { PluginConfig } from "../types";
+import type { DollarSign } from "xpresser/types";
+import type { PluginConfig } from "../types";
 
 export = async (args: string[], { helper }: { helper: { $: DollarSign } }) => {
     const $ = helper.$;
