@@ -1,7 +1,7 @@
-import {DollarSign} from "xpresser/types";
-import type {Index, MeiliSearch} from "meilisearch";
-import {namespace} from "./use.json";
-import {PluginConfig} from "./types";
+import { DollarSign } from "xpresser/types";
+import type { Index, MeiliSearch } from "meilisearch";
+import { namespace } from "./use.json";
+import { PluginConfig } from "./types";
 
 /**
  * Use Meilisearch - Gets the Meilisearch instance.
@@ -12,9 +12,9 @@ export function useMeilisearch($?: DollarSign) {
 
     if (!$.engineData.has(namespace)) {
         // require meilisearch
-        const {MeiliSearch} = require("meilisearch") as typeof import("meilisearch");
+        const { MeiliSearch } = require("meilisearch") as typeof import("meilisearch");
 
-        let {config} = $.config.get<PluginConfig>(namespace);
+        let { config } = $.config.get<PluginConfig>(namespace);
         if (typeof config === "function") config = config();
 
         // Initialize meilisearch
@@ -32,7 +32,7 @@ type RawSearchModel<T> = {
     name: string;
 
     // The name of the model's table/index.
-    // If not provided, the lower cased name of the model will be used.
+    // If not provided, the lower-cased name of the model will be used.
     index?: string;
 
     /**
@@ -74,7 +74,6 @@ export class SearchModel<Data = any> {
     initialized: boolean = false;
     readonly #getXpresserFn: () => DollarSign | undefined;
 
-
     constructor(model: RawSearchModel<Data>, $?: DollarSign) {
         if (!model.index) model.index = model.name.toLowerCase();
         this.model = model;
@@ -93,7 +92,6 @@ export class SearchModel<Data = any> {
             this.index = m.index(this.model.index!);
         }
 
-
         // if model has an init function, run it
         if (this.model.init) await this.model.init(this.index);
 
@@ -108,7 +106,9 @@ export class SearchModel<Data = any> {
         if (!this.initialized) await this.initialize();
 
         const documents = await this.model.data(this.index);
-        const addDocuments = await this.index.addDocuments(documents as Record<string, any>[]);
+        const addDocuments = await this.index.addDocuments(
+            documents as Record<string, any>[]
+        );
 
         return [documents.length, addDocuments];
     }
