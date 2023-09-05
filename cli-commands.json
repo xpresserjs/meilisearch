@@ -5,7 +5,7 @@
     "file": "install-meilisearch.js"
   },
   {
-    "command": "mei:start",
+    "command": "mei:start [bash]",
     "description": "Start meilisearch.",
     "file": "start-meilisearch.js"
   }
