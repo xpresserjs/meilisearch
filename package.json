@@ -12,12 +12,12 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "prettier": "^2.8.8",
-    "typescript": "^5.0.4",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
     "xpresser": "^0.31.1"
   },
   "dependencies": {
     "@xpresser/plugin-tools": "^1.2.6",
-    "meilisearch": "^0.32.3"
+    "meilisearch": "^0.34.1"
   }
 }
